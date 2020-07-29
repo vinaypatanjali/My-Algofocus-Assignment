@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Facebook Login button
         callbackManager = CallbackManager.Factory.create();
         // LoginButton loginButton = mBinding.buttonFacebookLogin;
-        facebookButton.setReadPermissions("email", "public_profile");
+        facebookButton.setReadPermissions("email", "public_profile","user_friends");
         facebookButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -114,12 +114,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
                 Log.d(TAG, "facebook:onCancel");
+                progressBar.setVisibility(View.INVISIBLE);
                 // ...
             }
 
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "facebook:onError", error);
+                showToast("facebook:onError: "+error+"");
+                progressBar.setVisibility(View.INVISIBLE);
+
                 // ...
             }
         });
@@ -142,6 +146,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    /**
+     * Function to
+     * show some message/toast
+     * to user
+     */
+    public void showToast(String message) {
+        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -169,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             SharedPreferences.Editor preferencesEditor1 = mPreferences.edit();
                             preferencesEditor1.putString("username", usernameString);
-                            // preferencesEditor1.apply();
+
 
                             preferencesEditor1.putString("email", emailString);
 
@@ -179,11 +193,11 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("username", usernameString);
                             intent.putExtra("email", emailString);
 
-                            // intent.putExtra("parceable",(par)mAuth);
+
 
                             startActivityForResult(intent, RC_SIGN_IN);
                             finish();
-                            // updateUI(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             try {
