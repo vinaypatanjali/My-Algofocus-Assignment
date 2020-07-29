@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyAssignment</string>
+    <string name="register">REGISTER</string>
+    <string name="registering">Registering...</string>
+    <string name="facebook_app_id">215887023061708</string>
+    <string name="fb_login_protocol_scheme">3b945a8b1f77a52cc7ef775241e41841</string>
+</resources>
